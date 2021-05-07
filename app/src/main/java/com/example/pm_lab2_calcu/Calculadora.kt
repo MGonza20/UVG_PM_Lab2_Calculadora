@@ -9,7 +9,8 @@ import net.objecthunter.exp4j.ExpressionBuilder
 
 class Calculadora : AppCompatActivity() {
 
-
+    //Se crea la variable de cada componente
+    //ya sea de tipo textview o button
     lateinit var txtResultado: TextView
     lateinit var txtOperacion: TextView
 
@@ -30,20 +31,20 @@ class Calculadora : AppCompatActivity() {
     lateinit var btnDivi: Button
     lateinit var btnIgual: Button
     lateinit var btnCE: Button
-    lateinit var btnBorrar: Button
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calculadora)
 
-        //Botones de números
-
-
+        //Se asigna la dirección de cada variable de textView, textview solo muestra texto, no se puede interactuar con el
+        //En este caso los dos textview son txtResultado, muestra el resultado de la operación
+        //txtOperacion muestra el input de la operación solicitada
         txtResultado = findViewById(R.id.txtResultado)
         txtOperacion = findViewById(R.id.txtOperacion)
 
-
+        //Se asigna la dirección de cada botón de los números en la calculadora
         btnUno = findViewById(R.id.btnUno)
         btnDos = findViewById(R.id.btnDos)
         btnTres = findViewById(R.id.btnTres)
@@ -55,17 +56,17 @@ class Calculadora : AppCompatActivity() {
         btnNueve = findViewById(R.id.btnNueve)
         btnCero = findViewById(R.id.btnCero)
 
+        //Se asigna la dirección de cada botón de los operadores en la calculadora
         btnMas = findViewById(R.id.btnMas)
         btnMenos = findViewById(R.id.btnMenos)
         btnMulti = findViewById(R.id.btnMulti)
         btnDivi = findViewById(R.id.btnDivi)
         btnIgual = findViewById(R.id.btnIgual)
         btnCE = findViewById(R.id.btnCE)
-        btnBorrar = findViewById(R.id.btnBorrar)
 
 
-        fun appendOnClick(clear: Boolean, string: String) {
-
+        //Función para hacer append de las operaciones
+        fun append(clear: Boolean, string: String) {
             if (clear) {
                 txtResultado.text = ""
                 txtOperacion.append(string)
@@ -76,24 +77,22 @@ class Calculadora : AppCompatActivity() {
             }
         }
 
-         fun clear() {
+        //Función que limpia o hace un clear de los textview
+         fun CE() {
             txtOperacion.text = ""
             txtResultado.text = ""
 
         }
 
-         fun calculate() {
+        //Función que calcula y realiza operaciones
+         fun calcular() {
 
             try {
-
+                //Implementé ExpressionBuilder en dependencies del gradle es de una libreria llamada exp4j evalua expresiones en este caso las operaciones básicas +,-,x,/
                 val input = ExpressionBuilder(txtOperacion.text.toString()).build()
                 val output = input.evaluate()
-                val longOutput = output.toLong()
-                if (output == longOutput.toDouble()){
-                    txtResultado.text = longOutput.toString()
-                }else{
-                    txtResultado.text = output.toString()
-                }
+                txtResultado.text = output.toString()
+
 
             }catch (e:Exception){
                 Toast.makeText(this@Calculadora,e.message,Toast.LENGTH_LONG).show()
@@ -102,37 +101,31 @@ class Calculadora : AppCompatActivity() {
 
 
 
-        btnCero.setOnClickListener { appendOnClick(true, "0") }
-        btnUno.setOnClickListener { appendOnClick(true, "1") }
-        btnDos.setOnClickListener { appendOnClick(true, "2") }
-        btnTres.setOnClickListener { appendOnClick(true, "3") }
-        btnCuatro.setOnClickListener { appendOnClick(true, "4") }
-        btnCinco.setOnClickListener { appendOnClick(true, "5") }
-        btnSeis.setOnClickListener { appendOnClick(true, "6") }
-        btnSiete.setOnClickListener { appendOnClick(true, "7") }
-        btnOcho.setOnClickListener { appendOnClick(true, "8") }
-        btnNueve.setOnClickListener { appendOnClick(true, "9") }
+        //OnClickListener está atento a cuando se apacha un botón
+        btnCero.setOnClickListener { append(true, "0") }
+        btnUno.setOnClickListener { append(true, "1") }
+        btnDos.setOnClickListener { append(true, "2") }
+        btnTres.setOnClickListener { append(true, "3") }
+        btnCuatro.setOnClickListener { append(true, "4") }
+        btnCinco.setOnClickListener { append(true, "5") }
+        btnSeis.setOnClickListener { append(true, "6") }
+        btnSiete.setOnClickListener { append(true, "7") }
+        btnOcho.setOnClickListener { append(true, "8") }
+        btnNueve.setOnClickListener { append(true, "9") }
 
-        btnMas.setOnClickListener { appendOnClick(false, "+") }
-        btnMenos.setOnClickListener { appendOnClick(false, "-") }
-        btnMulti.setOnClickListener { appendOnClick(false, "*") }
-        btnDivi.setOnClickListener { appendOnClick(false, "/") }
+        btnMas.setOnClickListener { append(false, "+") }
+        btnMenos.setOnClickListener { append(false, "-") }
+        btnMulti.setOnClickListener { append(false, "*") }
+        btnDivi.setOnClickListener { append(false, "/") }
 
         btnCE.setOnClickListener {
-            clear()
+            CE()
         }
 
         btnIgual.setOnClickListener {
-            calculate()
+            calcular()
         }
 
-
-/*
-        btnUno.setOnClickListener{
-            Toast.makeText(this, "Uno", Toast.LENGTH_SHORT).show()
-        }
-        txtResultado.text = "Salut Mondee"
- */
 
     }
 }
