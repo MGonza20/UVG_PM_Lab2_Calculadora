@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+/*
     override fun onStart() {
         super.onStart()
         Toast.makeText(this, "onStart", Toast.LENGTH_SHORT).show()
@@ -52,4 +52,6 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         Toast.makeText(this, "onDestroy", Toast.LENGTH_SHORT).show()
     }
+ */
+
 }
